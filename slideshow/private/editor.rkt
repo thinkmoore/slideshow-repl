@@ -244,11 +244,11 @@
       (call-in-eval
        (lambda ()
          (let loop ()
-           (define e (read-syntax port port))
+           (define e ((current-read-interaction) port port))
            (unless (eof-object? e)
              (with-handlers ([exn? (lambda (exn)
                                      (show-error exn))])
-               (call-with-values (lambda () (eval `(#%top-interaction . ,e) ns))
+               (call-with-values (lambda () (eval e ns))
                  (lambda l (map (current-print) l))))
              (loop)))))
       (cleanup)

@@ -10,6 +10,8 @@
          pict/convert
          pict/snip)
 
+(require shill/cap/lang/runtime-config)
+
 (provide
  repl-group?
  module-backing?
@@ -94,7 +96,7 @@
   (define result-editor
     (new (class repl-text%
            (define/override (get-prompt) (or prompt-str ""))
-           (define/override (call-in-eval thunk) (wrap-eval thunk #f))
+           (define/override (call-in-eval thunk) (wrap-eval (lambda () (run-in-prompt thunk)) #f))
            (super-new))
          [namespace (make-namespace)]))
   (define result-custodian (make-custodian))
