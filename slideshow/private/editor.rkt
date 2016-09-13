@@ -159,6 +159,7 @@
        [else indenting-limit]))
 
     (define/public (reset-console)
+      (set! ns (make-namespace))
       (clear-input-port)
       (clear-box-input-port)
       (clear-output-ports)
@@ -235,7 +236,8 @@
                            (loop (+ pos 1)))])))))
 
     (init [(init-ns namespace)])
-    (define ns init-ns)
+    (define make-namespace init-ns)
+    (define ns (make-namespace))
     
     (define/public (call-in-eval thunk) (void))
 
@@ -382,7 +384,7 @@
                  [label "Test"]
                  [width 800]
                  [height 600]))
-  (define t (new repl-text%))
+  (define t (new repl-text% [namespace make-base-namespace]))
   (void
    (new editor-canvas%
         [parent f]

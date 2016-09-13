@@ -98,7 +98,7 @@
            (define/override (get-prompt) (or prompt-str ""))
            (define/override (call-in-eval thunk) (wrap-eval (lambda () (run-in-prompt thunk)) #f))
            (super-new))
-         [namespace (make-namespace)]))
+         [namespace make-namespace]))
   (define result-custodian (make-custodian))
   (define (reset-custodian!)
     (custodian-shutdown-all result-custodian)
